@@ -3,19 +3,27 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Rota do Microserviço</th>
+        <th>Evento</th>
+        <th>Data Inclusão</th>
+        <th>Data Expiração</th>
+        <th>Hora</th>
+        <th>Usuário</th>
+        <th>Rota Microserviço</th>
         <th>Descrição</th>
-        <th>ID do Usuário</th>
         <th>Observação</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Verifica se a mensagem existe antes de exibir -->
-      <tr>
-        <td>{{ message?.RotaMicroservico || 'Não fornecido' }}</td>
-        <td>{{ message?.Descricao }}</td>
-        <td>{{ message?.IdUsuario }}</td>
-        <td>{{ message?.Observacao }}</td>
+      <!-- Itera sobre a lista de mensagens -->
+      <tr *ngFor="let message of messages">
+        <td>{{ message.eventId }}</td>
+        <td>{{ message.dataInclusao }}</td>
+        <td>{{ message.dataExpiracao }}</td>
+        <td>{{ message.hora }}</td>
+        <td>{{ message.idUsuario }}</td>
+        <td>{{ message.rotaMicroservico }}</td>
+        <td>{{ message.descricao }}</td>
+        <td>{{ message.observacao }}</td>
       </tr>
     </tbody>
   </table>

@@ -15,7 +15,7 @@ export class SignalrService {
   // Iniciar a conexão com o SignalR
   public startConnection(): void {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('http://univmdockp01:8052/notifications')  // A URL do BFF
+      .withUrl('https://localhost:7058/notifications')  // A URL do BFF
       .build();
 
     // Quando a conexão for estabelecida, ouça os métodos do backend
