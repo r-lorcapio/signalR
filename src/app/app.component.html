@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>Evento</th>
+        <th>Status</th>
         <th>Data Inclusão</th>
         <th>Data Expiração</th>
         <th>Hora</th>
@@ -17,6 +18,7 @@
       <!-- Itera sobre a lista de mensagens -->
       <tr *ngFor="let message of messages">
         <td>{{ message.eventId }}</td>
+        <td>{{ message.status}}</td>
         <td>{{ message.dataInclusao }}</td>
         <td>{{ message.dataExpiracao }}</td>
         <td>{{ message.hora }}</td>

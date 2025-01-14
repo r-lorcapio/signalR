@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importação necessária
 import { SignalrService } from './signalr.service';
+import { DefaultDeserializer } from 'v8';
 
 // Interface representando a estrutura da mensagem
 interface BaseMicroserviceEvent {
@@ -12,44 +13,45 @@ interface BaseMicroserviceEvent {
   rotaMicroservico: string;
   descricao: string;
   observacao: string;
+  status?: string; // Se for opcional, use o "?".
+  idGruposTrabalhos: any[]; // Ajuste conforme o tipo correto (atualmente é um array vazio no exemplo).
+  possuiLink: any; // Ajuste conforme o tipo correto (atualmente é `null` no exemplo).
 }
 
 @Component({
   selector: 'app-root',
-  standalone: true,  // Torna este componente standalone
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [CommonModule], // Importa CommonModule para usar *ngFor
+  imports: [CommonModule],
 })
 export class AppComponent implements OnInit, OnDestroy {
-
-  // Agora messages é uma lista de BaseMicroserviceEvent
   public messages: BaseMicroserviceEvent[] = [];
 
-  constructor(private signalrService: SignalrService) { }
+  constructor(private signalrService: SignalrService) {}
 
   ngOnInit(): void {
-    // Inicia a conexão com o SignalR quando o componente for carregado
     this.signalrService.startConnection();
   
-    // Subscreve-se para receber as mensagens do SignalR
-    this.signalrService.getMessages().subscribe((message: string) => {
-      // Transforma a mensagem recebida de string para uma lista de objetos JSON
-      const parsedMessages: BaseMicroserviceEvent[] = JSON.parse(message); // Assume-se que a mensagem é um JSON válido que contém uma lista
+    this.signalrService.getMessages().subscribe((message: any) => {
+      try {
+        // Verifica se a mensagem é uma string JSON ou um objeto
+        debugger;
+        const parsedMessages: BaseMicroserviceEvent[] = 
+          typeof message === 'string' ? JSON.parse(message) : message;
   
-      this.messages = []; 
-      
-      // Itera sobre cada mensagem da lista e adiciona à propriedade messages
-      parsedMessages.forEach(msg => {
-        this.messages.push(msg);
-      });
+        // Atualiza a lista de mensagens
+        this.messages = parsedMessages;
   
-      console.log(this.messages);
+        console.log(this.messages);
+      } catch (error) {
+        console.error('Erro ao processar mensagem:', error);
+      }
     });
   }
+  
 
   ngOnDestroy(): void {
-    // Quando o componente for destruído, pare a conexão do SignalR
     this.signalrService.stopConnection();
   }
 }
