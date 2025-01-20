@@ -1,5 +1,16 @@
 <div class="container">
   <h2>WebSocket SIA</h2>
+
+  <h4>
+    <strong>Evento:</strong> {{ globalMessage?.eventId }} <br>
+    <strong>Descrição:</strong> {{ globalMessage?.descricao }} <br>
+    <strong>Observação:</strong> {{ globalMessage?.observacao }} <br>
+    <strong>Status:</strong> {{ globalMessage?.status || 'N/A' }} <br>
+    <strong>Data Última Importação:</strong> {{ globalMessage?.dataUltimaImportacao || 'N/A' }} <br>
+    <strong>Hora Última Importação:</strong> {{ globalMessage?.horaUltimaImportacao || 'N/A' }} <br>
+    <strong>Provável Horário Próxima Importação:</strong> {{ globalMessage?.provavelHorarioProximaImportacao || 'N/A' }}
+  </h4>
+
   <table class="table table-bordered">
     <thead>
       <tr>
